@@ -20,4 +20,17 @@ extension PrimaryAttrExtension on PrimaryAttr {
         return ImageName.heroUniversal;
     }
   }
+
+  String get fullPrimaryAttrName {
+    switch (this) {
+      case PrimaryAttr.str:
+        return 'Strength';
+      case PrimaryAttr.agi:
+        return 'Agility';
+      case PrimaryAttr.int:
+        return 'Intelligence';
+      case PrimaryAttr.all:
+        return 'Universal';
+    }
+  }
 }

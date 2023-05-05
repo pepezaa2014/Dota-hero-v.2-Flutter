@@ -21,4 +21,6 @@ class ImageName {
       'assets/images/icon_projectile_speed.png';
   static const String iconTurnRate = 'assets/images/icon_turn_rate.png';
   static const String iconVision = 'assets/images/icon_vision.png';
+  static const String melee = 'assets/images/melee.png';
+  static const String ranged = 'assets/images/ranged.png';
 }

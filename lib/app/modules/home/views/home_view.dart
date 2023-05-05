@@ -1,6 +1,6 @@
 import 'package:dota_v2_pepe/app/const/app_color.dart';
 import 'package:dota_v2_pepe/app/data/models/dota_heroes_model.dart';
-import 'package:dota_v2_pepe/app/widget/card.dart';
+import 'package:dota_v2_pepe/app/widget/dota_hero_card.dart';
 import 'package:dota_v2_pepe/resources/resources.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -63,14 +63,15 @@ class HomeView extends GetView<HomeController> {
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 8.0,
-                mainAxisSpacing: 8.0,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
                 childAspectRatio: 16 / 9,
               ),
               itemCount: dotaHeroList.length,
               itemBuilder: (context, index) {
-                return DotaHeroCardTile(
+                return DotaHeroCard(
                   information: dotaHeroList[index],
+                  onTap: () => controller.goToHeroDetail(dotaHeroList[index]),
                 );
               },
             ),
@@ -174,14 +175,14 @@ class HomeView extends GetView<HomeController> {
                               return IconButton(
                                 onPressed: () => controller.isFavorite.toggle(),
                                 icon: controller.isFavorite.value
-                                    ? const Opacity(
+                                    ? const Icon(
+                                        CupertinoIcons.heart_fill,
+                                      )
+                                    : const Opacity(
                                         opacity: 0.25,
                                         child: Icon(
                                           CupertinoIcons.heart_fill,
                                         ),
-                                      )
-                                    : const Icon(
-                                        CupertinoIcons.heart_fill,
                                       ),
                                 iconSize: 24,
                                 color: Colors.white,

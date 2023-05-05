@@ -17,13 +17,13 @@ class AppPages {
       name: _Paths.HOME,
       page: () => const HomeView(),
       binding: HomeBinding(),
-      transition: Transition.cupertinoDialog,
+      transition: Transition.cupertino,
     ),
     GetPage(
       name: _Paths.DOTA_HERO_DETAIL,
       page: () => const DotaHeroDetailView(),
       binding: DotaHeroDetailBinding(),
-      transition: Transition.cupertinoDialog,
+      transition: Transition.cupertino,
     ),
   ];
 }

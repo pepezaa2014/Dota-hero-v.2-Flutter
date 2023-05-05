@@ -1,3 +1,4 @@
+import 'package:dota_v2_pepe/app/const/atk_type.dart';
 import 'package:dota_v2_pepe/app/const/primaryattr.dart';
 import 'package:get/get.dart';
 
@@ -6,7 +7,7 @@ class DotaHeroes {
   String? name;
   String? localizedName;
   String? _primaryAttr;
-  String? attackType;
+  String? _attackType;
   List<String>? roles;
   String? img;
   String? icon;
@@ -65,7 +66,7 @@ class DotaHeroes {
     name = json['name'];
     localizedName = json['localized_name'];
     _primaryAttr = json['primary_attr'];
-    attackType = json['attack_type'];
+    _attackType = json['attack_type'];
     roles = json['roles'].cast<String>();
     img = json['img'];
     icon = json['icon'];
@@ -119,10 +120,60 @@ class DotaHeroes {
     nullPick = json['null_pick'];
     nullWin = json['null_win'];
   }
+
+  double health() {
+    return (baseHealth ?? 0.0) + ((baseStr as num).toDouble() * 20.0);
+  }
+
+  double healthRegen() {
+    return (baseHealthRegen ?? 0.0) + ((baseStr as num).toDouble() * 0.1);
+  }
+
+  double mana() {
+    return (baseMana ?? 0.0) + ((baseInt as num).toDouble() * 12.0);
+  }
+
+  double manaRegen() {
+    return (baseManaRegen ?? 0.0) + ((baseInt as num).toDouble() * 0.05);
+  }
+
+  double armor() {
+    return (baseArmor ?? 0.0) + ((baseAgi as num).toDouble() * 0.167);
+  }
+
+  double attackMin() {
+    switch (primaryAttr) {
+      case PrimaryAttr.str:
+        return (baseAttackMin ?? 0.0) + (baseStr as num).toDouble();
+      case PrimaryAttr.agi:
+        return (baseAttackMin ?? 0.0) + (baseAgi as num).toDouble();
+      case PrimaryAttr.int:
+        return (baseAttackMin ?? 0.0) + (baseInt as num).toDouble();
+      default:
+        return (baseAttackMin ?? 0.0);
+    }
+  }
+
+  double attackMax() {
+    switch (primaryAttr) {
+      case PrimaryAttr.str:
+        return (baseAttackMax ?? 0.0) + (baseStr as num).toDouble();
+      case PrimaryAttr.agi:
+        return (baseAttackMax ?? 0.0) + (baseAgi as num).toDouble();
+      case PrimaryAttr.int:
+        return (baseAttackMax ?? 0.0) + (baseInt as num).toDouble();
+      default:
+        return (baseAttackMax ?? 0.0);
+    }
+  }
 }
 
 extension DotaHeroExtension on DotaHeroes {
   PrimaryAttr? get primaryAttr {
     return PrimaryAttr.values.firstWhereOrNull((e) => e.name == _primaryAttr);
+  }
+
+  AtackType? get attackType {
+    return AtackType.values.firstWhereOrNull((e) => e.name == _attackType);
   }
 }

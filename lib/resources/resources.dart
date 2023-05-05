@@ -1,1 +1,1 @@
-part 'images.dart';
+part 'image_name.dart';

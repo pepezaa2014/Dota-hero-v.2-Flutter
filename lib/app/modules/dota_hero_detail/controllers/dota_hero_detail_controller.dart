@@ -1,12 +1,13 @@
+import 'package:dota_v2_pepe/app/data/models/dota_heroes_model.dart';
 import 'package:get/get.dart';
 
 class DotaHeroDetailController extends GetxController {
-  //TODO: Implement DotaHeroDetailController
+  late final DotaHeroes informationHero;
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    informationHero = Get.arguments;
   }
 
   @override
@@ -18,6 +19,4 @@ class DotaHeroDetailController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }
