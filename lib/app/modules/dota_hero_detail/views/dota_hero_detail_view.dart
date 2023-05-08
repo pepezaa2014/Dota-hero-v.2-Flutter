@@ -1,6 +1,7 @@
 import 'package:dota_v2_pepe/app/const/app_color.dart';
 import 'package:dota_v2_pepe/app/modules/widget/detail_widget.dart';
 import 'package:dota_v2_pepe/resources/resources.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -26,7 +27,24 @@ class DotaHeroDetailView extends GetView<DotaHeroDetailController> {
       ),
       centerTitle: true,
       actions: [
-        Icon(Icons.favorite_border),
+        Obx(
+          () {
+            final isFavorite = controller.favorites.value
+                .contains(controller.informationHero.id);
+            return IconButton(
+              onPressed: () => controller.setThisFavorite(),
+              icon: isFavorite
+                  ? const Icon(
+                      CupertinoIcons.heart_fill,
+                    )
+                  : const Icon(
+                      CupertinoIcons.heart,
+                    ),
+              iconSize: 24,
+              color: Colors.white,
+            );
+          },
+        ),
       ],
     );
   }

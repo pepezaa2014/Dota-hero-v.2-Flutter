@@ -1,5 +1,6 @@
 import 'package:dota_v2_pepe/app/const/app_color.dart';
 import 'package:dota_v2_pepe/app/data/models/dota_heroes_model.dart';
+import 'package:dota_v2_pepe/app/utils/loading_indicator.dart';
 import 'package:dota_v2_pepe/app/widget/dota_hero_card.dart';
 import 'package:dota_v2_pepe/resources/resources.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,9 +16,14 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        appBar: _appbar(),
-        body: _body(),
+      child: Stack(
+        children: [
+          Scaffold(
+            appBar: _appbar(),
+            body: _body(),
+          ),
+          Obx(() => loadingIndicator(controller.isLoading.value))
+        ],
       ),
     );
   }
@@ -46,6 +52,12 @@ class HomeView extends GetView<HomeController> {
                       ?.toLowerCase()
                       .contains(searchHeroText.toLowerCase()) ??
                   false)
+              .toList();
+        }
+
+        if (controller.isFavorite.value) {
+          dotaHeroList = dotaHeroList
+              .where((e) => controller.favorites.contains(e.id))
               .toList();
         }
 

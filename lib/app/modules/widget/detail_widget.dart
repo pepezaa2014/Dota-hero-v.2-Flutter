@@ -185,24 +185,33 @@ class AttributeWidget extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                information.health().toStringAsFixed(0),
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.primaryColor,
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  '+ ${information.healthRegen().toStringAsFixed(1)}',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.tertiaryColor,
+                              Stack(
+                                children: [
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: 160,
+                                    child: Text(
+                                      information.health().toStringAsFixed(0),
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.primaryColor,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Container(
+                                    alignment: Alignment.centerRight,
+                                    width: 160,
+                                    child: Text(
+                                      '+ ${information.healthRegen().toStringAsFixed(1)}',
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.tertiaryColor,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -222,22 +231,30 @@ class AttributeWidget extends StatelessWidget {
                             children: [
                               Stack(
                                 children: [
-                                  Text(
-                                    information.mana().toStringAsFixed(0),
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.primaryColor,
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: 160,
+                                    child: Text(
+                                      information.mana().toStringAsFixed(0),
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.primaryColor,
+                                      ),
                                     ),
                                   ),
-                                  Text(
-                                    '+ ${information.manaRegen().toStringAsFixed(1)}',
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.tertiaryColor,
+                                  Container(
+                                    width: 160,
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      '+ ${information.manaRegen().toStringAsFixed(1)}',
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.tertiaryColor,
+                                      ),
+                                      textAlign: TextAlign.right,
                                     ),
-                                    textAlign: TextAlign.right,
                                   ),
                                 ],
                               ),
@@ -399,44 +416,17 @@ class RolesWidget extends StatelessWidget {
               child: Center(
                 child: Row(
                   children: [
-                    Expanded(
-                      child: Text(
-                        'Carry',
-                        style: TextStyle(
-                          color: information.roles?.contains('Carry') == true
-                              ? AppColors.primaryColor
-                              : AppColors.tertiaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                    _roleText(
+                      role: 'Carry',
+                      checkedColor: information.roles?.contains('Carry'),
                     ),
-                    Expanded(
-                      child: Text(
-                        'Support',
-                        style: TextStyle(
-                          color: information.roles?.contains('Support') == true
-                              ? AppColors.primaryColor
-                              : AppColors.tertiaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                    _roleText(
+                      role: 'Support',
+                      checkedColor: information.roles?.contains('Support'),
                     ),
-                    Expanded(
-                      child: Text(
-                        'Nuker',
-                        style: TextStyle(
-                          color: information.roles?.contains('Nuker') == true
-                              ? AppColors.primaryColor
-                              : AppColors.tertiaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                    _roleText(
+                      role: 'Nuker',
+                      checkedColor: information.roles?.contains('Nuker'),
                     ),
                   ],
                 ),
@@ -451,44 +441,17 @@ class RolesWidget extends StatelessWidget {
               child: Center(
                 child: Row(
                   children: [
-                    Expanded(
-                      child: Text(
-                        'Disabler',
-                        style: TextStyle(
-                          color: information.roles?.contains('Disabler') == true
-                              ? AppColors.primaryColor
-                              : AppColors.tertiaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                    _roleText(
+                      role: 'Disabler',
+                      checkedColor: information.roles?.contains('Disabler'),
                     ),
-                    Expanded(
-                      child: Text(
-                        'Jungler',
-                        style: TextStyle(
-                          color: information.roles?.contains('Jungler') == true
-                              ? AppColors.primaryColor
-                              : AppColors.tertiaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                    _roleText(
+                      role: 'Jungler',
+                      checkedColor: information.roles?.contains('Jungler'),
                     ),
-                    Expanded(
-                      child: Text(
-                        'Durable',
-                        style: TextStyle(
-                          color: information.roles?.contains('Durable') == true
-                              ? AppColors.primaryColor
-                              : AppColors.tertiaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                    _roleText(
+                      role: 'Durable',
+                      checkedColor: information.roles?.contains('Durable'),
                     ),
                   ],
                 ),
@@ -503,45 +466,17 @@ class RolesWidget extends StatelessWidget {
               child: Center(
                 child: Row(
                   children: [
-                    Expanded(
-                      child: Text(
-                        'Escape',
-                        style: TextStyle(
-                          color: information.roles?.contains('Escape') == true
-                              ? AppColors.primaryColor
-                              : AppColors.tertiaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                    _roleText(
+                      role: 'Escape',
+                      checkedColor: information.roles?.contains('Escape'),
                     ),
-                    Expanded(
-                      child: Text(
-                        'Pusher',
-                        style: TextStyle(
-                          color: information.roles?.contains('Pusher') == true
-                              ? AppColors.primaryColor
-                              : AppColors.tertiaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                    _roleText(
+                      role: 'Pusher',
+                      checkedColor: information.roles?.contains('Pusher'),
                     ),
-                    Expanded(
-                      child: Text(
-                        'Initiator',
-                        style: TextStyle(
-                          color:
-                              information.roles?.contains('Initiator') == true
-                                  ? AppColors.primaryColor
-                                  : AppColors.tertiaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                    _roleText(
+                      role: 'Initiator',
+                      checkedColor: information.roles?.contains('Initiator'),
                     ),
                   ],
                 ),
@@ -553,8 +488,20 @@ class RolesWidget extends StatelessWidget {
     );
   }
 
-  _roleText({required String role}) {
-    return;
+  _roleText({required String role, required bool? checkedColor}) {
+    return Expanded(
+      child: Text(
+        role,
+        style: TextStyle(
+          color: checkedColor == true
+              ? AppColors.primaryColor
+              : AppColors.tertiaryColor,
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
   }
 }
 
@@ -595,9 +542,10 @@ class StatsWidget extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: Container(
-                      color: Colors.amber,
+                    child: SizedBox(
+                      height: 150,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(bottom: 16),
@@ -611,7 +559,9 @@ class StatsWidget extends StatelessWidget {
                                 const SizedBox(
                                   width: 8,
                                 ),
-                                // _statText(stat: information?.primaryAttr?.),
+                                _statText(
+                                    stat:
+                                        '${information.attackMin().toStringAsFixed(0)}-${information.attackMax().toStringAsFixed(0)}'),
                               ],
                             ),
                           ),
@@ -674,9 +624,10 @@ class StatsWidget extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: Container(
-                      color: Colors.amber,
+                    child: SizedBox(
+                      height: 150,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(bottom: 16),
@@ -690,7 +641,9 @@ class StatsWidget extends StatelessWidget {
                                 const SizedBox(
                                   width: 8,
                                 ),
-                                Text(''),
+                                _statText(
+                                  stat: information.armor().toStringAsFixed(1),
+                                ),
                               ],
                             ),
                           ),
@@ -715,9 +668,10 @@ class StatsWidget extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: Container(
-                      color: Colors.amber,
+                    child: SizedBox(
+                      height: 150,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(bottom: 16),

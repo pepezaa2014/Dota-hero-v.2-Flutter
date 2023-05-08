@@ -5,8 +5,10 @@ import 'package:dota_v2_pepe/app/core/routers/dio_client.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:material_color_generator/material_color_generator.dart';
 
+import 'app/managers/session_manager.dart';
 import 'app/routes/app_pages.dart';
 
 void main() async {
@@ -26,6 +28,13 @@ void main() async {
 }
 
 Future<void> _setupInstance() async {
+  Get.put(GetStorage());
+
+  final GetStorage getStorage = Get.find();
+  Get.put(SessionManager(getStorage));
+  final SessionManager sessionManager = Get.find();
+  sessionManager.loadSession();
+
   Get.put(Dio());
 
   final Dio dio = Get.find();
