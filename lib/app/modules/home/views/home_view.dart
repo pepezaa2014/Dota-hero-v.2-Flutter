@@ -1,4 +1,5 @@
 import 'package:dota_v2_pepe/app/const/app_color.dart';
+import 'package:dota_v2_pepe/app/const/primaryattr_extension.dart';
 import 'package:dota_v2_pepe/app/data/models/dota_heroes_model.dart';
 import 'package:dota_v2_pepe/app/utils/loading_indicator.dart';
 import 'package:dota_v2_pepe/app/widget/dota_hero_card.dart';
@@ -32,7 +33,7 @@ class HomeView extends GetView<HomeController> {
     return Obx(
       () {
         final dotaHeroes = controller.dotaHeroes;
-        final sort = controller.isSort.value;
+        final sort = controller.isSortClicked.value;
         final searchHeroText = controller.searchHeroName.value;
 
         List<DotaHeroes> dotaHeroList = dotaHeroes;
@@ -61,6 +62,24 @@ class HomeView extends GetView<HomeController> {
               .toList();
         }
 
+        if (controller.filterPrimaryAttr[0]) {
+          dotaHeroList = dotaHeroList
+              .where((e) => e.primaryAttr == PrimaryAttr.str)
+              .toList();
+        } else if (controller.filterPrimaryAttr[1]) {
+          dotaHeroList = dotaHeroList
+              .where((e) => e.primaryAttr == PrimaryAttr.agi)
+              .toList();
+        } else if (controller.filterPrimaryAttr[2]) {
+          dotaHeroList = dotaHeroList
+              .where((e) => e.primaryAttr == PrimaryAttr.int)
+              .toList();
+        } else if (controller.filterPrimaryAttr[3]) {
+          dotaHeroList = dotaHeroList
+              .where((e) => e.primaryAttr == PrimaryAttr.all)
+              .toList();
+        }
+
         return Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -83,7 +102,11 @@ class HomeView extends GetView<HomeController> {
               itemBuilder: (context, index) {
                 return DotaHeroCard(
                   information: dotaHeroList[index],
-                  onTap: () => controller.goToHeroDetail(dotaHeroList[index]),
+                  isFavorite:
+                      controller.favorites.contains(dotaHeroList[index].id),
+                  onTap: () => controller.goToHeroDetail(
+                    dotaHeroList[index],
+                  ),
                 );
               },
             ),
@@ -113,45 +136,40 @@ class HomeView extends GetView<HomeController> {
               ),
               child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Image.asset(
-                      ImageName.heroStrength,
-                      width: 32,
-                      height: 32,
+                  Obx(
+                    () => _iconFilter(
+                      imageName: ImageName.heroStrength,
+                      onTap: () {
+                        controller.setFilterPrimaryAttr(0);
+                      },
+                      opacity: controller.filterPrimaryAttr[0] ? 1 : 0.25,
                     ),
                   ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Image.asset(
-                      ImageName.heroAgility,
-                      width: 32,
-                      height: 32,
+                  Obx(
+                    () => _iconFilter(
+                      imageName: ImageName.heroAgility,
+                      onTap: () {
+                        controller.setFilterPrimaryAttr(1);
+                      },
+                      opacity: controller.filterPrimaryAttr[1] ? 1 : 0.25,
                     ),
                   ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Image.asset(
-                      ImageName.heroIntelligence,
-                      width: 32,
-                      height: 32,
+                  Obx(
+                    () => _iconFilter(
+                      imageName: ImageName.heroIntelligence,
+                      onTap: () {
+                        controller.setFilterPrimaryAttr(2);
+                      },
+                      opacity: controller.filterPrimaryAttr[2] ? 1 : 0.25,
                     ),
                   ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Image.asset(
-                      ImageName.heroUniversal,
-                      width: 32,
-                      height: 32,
+                  Obx(
+                    () => _iconFilter(
+                      imageName: ImageName.heroUniversal,
+                      onTap: () {
+                        controller.setFilterPrimaryAttr(3);
+                      },
+                      opacity: controller.filterPrimaryAttr[3] ? 1 : 0.25,
                     ),
                   ),
                   const SizedBox(
@@ -166,8 +184,9 @@ class HomeView extends GetView<HomeController> {
                           Obx(
                             () {
                               return IconButton(
-                                onPressed: () => controller.isSort.toggle(),
-                                icon: controller.isSort.value
+                                onPressed: () =>
+                                    controller.isSortClicked.toggle(),
+                                icon: controller.isSortClicked.value
                                     ? const Icon(
                                         CupertinoIcons.sort_up,
                                       )
@@ -241,6 +260,34 @@ class HomeView extends GetView<HomeController> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  _iconFilter({
+    required String imageName,
+    required double opacity,
+    required Function() onTap,
+  }) {
+    return Opacity(
+      opacity: opacity,
+      child: Row(
+        children: [
+          GestureDetector(
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Image.asset(
+                imageName,
+                width: 32,
+                height: 32,
+              ),
+            ),
+          ),
+          const SizedBox(
+            width: 8,
+          ),
+        ],
       ),
     );
   }

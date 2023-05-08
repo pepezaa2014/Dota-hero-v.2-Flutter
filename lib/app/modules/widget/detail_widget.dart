@@ -4,8 +4,8 @@ import 'package:dota_v2_pepe/app/const/hero_portrait.dart';
 import 'package:dota_v2_pepe/app/data/models/dota_heroes_model.dart';
 import 'package:dota_v2_pepe/resources/resources.dart';
 import 'package:flutter/material.dart';
-import 'package:dota_v2_pepe/app/const/primaryattr.dart';
-import 'package:dota_v2_pepe/app/const/atk_type.dart';
+import 'package:dota_v2_pepe/app/const/primaryattr_extension.dart';
+import 'package:dota_v2_pepe/app/const/atk_type_extension.dart';
 
 class HeadWidget extends StatelessWidget {
   const HeadWidget({

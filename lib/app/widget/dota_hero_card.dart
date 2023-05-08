@@ -1,6 +1,7 @@
 import 'package:dota_v2_pepe/app/const/app_constant.dart';
-import 'package:dota_v2_pepe/app/const/primaryattr.dart';
+import 'package:dota_v2_pepe/app/const/primaryattr_extension.dart';
 import 'package:dota_v2_pepe/app/data/models/dota_heroes_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DotaHeroCard extends StatelessWidget {
@@ -8,10 +9,12 @@ class DotaHeroCard extends StatelessWidget {
     Key? key,
     required this.information,
     required this.onTap,
+    required this.isFavorite,
   }) : super(key: key);
 
   final DotaHeroes information;
   final Function() onTap;
+  final bool isFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +33,17 @@ class DotaHeroCard extends StatelessWidget {
               ],
             ),
             child: GridTile(
+              header: Container(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Icon(
+                    isFavorite ? CupertinoIcons.heart_fill : null,
+                    size: 24,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
               footer: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(

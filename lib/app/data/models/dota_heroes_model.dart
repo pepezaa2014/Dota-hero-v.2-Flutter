@@ -1,5 +1,5 @@
-import 'package:dota_v2_pepe/app/const/atk_type.dart';
-import 'package:dota_v2_pepe/app/const/primaryattr.dart';
+import 'package:dota_v2_pepe/app/const/atk_type_extension.dart';
+import 'package:dota_v2_pepe/app/const/primaryattr_extension.dart';
 import 'package:get/get.dart';
 
 class DotaHeroes {
@@ -149,6 +149,11 @@ class DotaHeroes {
         return (baseAttackMin ?? 0.0) + (baseAgi as num).toDouble();
       case PrimaryAttr.int:
         return (baseAttackMin ?? 0.0) + (baseInt as num).toDouble();
+      case PrimaryAttr.all:
+        return (baseAttackMin ?? 0.0) +
+            ((baseStr as num).toDouble() * 0.6) +
+            ((baseAgi as num).toDouble() * 0.6) +
+            ((baseInt as num).toDouble() * 0.6);
       default:
         return (baseAttackMin ?? 0.0);
     }
@@ -162,6 +167,11 @@ class DotaHeroes {
         return (baseAttackMax ?? 0.0) + (baseAgi as num).toDouble();
       case PrimaryAttr.int:
         return (baseAttackMax ?? 0.0) + (baseInt as num).toDouble();
+      case PrimaryAttr.all:
+        return (baseAttackMax ?? 0.0) +
+            ((baseStr as num).toDouble() * 0.6) +
+            ((baseAgi as num).toDouble() * 0.6) +
+            ((baseInt as num).toDouble() * 0.6);
       default:
         return (baseAttackMax ?? 0.0);
     }

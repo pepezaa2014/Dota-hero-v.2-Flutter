@@ -12,9 +12,10 @@ class HomeController extends GetxController {
   final SessionManager _sessionManager = Get.find();
 
   late final RxList<int> favorites;
+  final RxList<bool> filterPrimaryAttr = [false, false, false, false].obs;
 
   final RxBool isFavorite = false.obs;
-  final RxBool isSort = false.obs;
+  final RxBool isSortClicked = false.obs;
   final RxString searchHeroName = ''.obs;
 
   final RxList<DotaHeroes> dotaHeroes = RxList();
@@ -69,6 +70,20 @@ class HomeController extends GetxController {
       showAlertError(
         error: error,
       );
+    }
+  }
+
+  void setFilterPrimaryAttr(int index) {
+    if (filterPrimaryAttr.contains(true)) {
+      if (filterPrimaryAttr[index] == true) {
+        filterPrimaryAttr[index] = !filterPrimaryAttr[index];
+      } else {
+        filterPrimaryAttr.value =
+            List<bool>.filled(filterPrimaryAttr.length, false);
+        filterPrimaryAttr[index] = !filterPrimaryAttr[index];
+      }
+    } else {
+      filterPrimaryAttr[index] = !filterPrimaryAttr[index];
     }
   }
 }
