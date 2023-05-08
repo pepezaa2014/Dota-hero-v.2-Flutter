@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:dota_v2_pepe/app/core/routers/dio_client.dart';
+import 'package:dota_v2_pepe/app/core/dio_client.dart';
 import 'package:dota_v2_pepe/app/core/routers/dota_hero_router.dart';
 import 'package:dota_v2_pepe/app/data/models/dota_heroes_model.dart';
 import 'package:dota_v2_pepe/app/core/handle_exceptions.dart';

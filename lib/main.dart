@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dota_v2_pepe/app/const/app_color.dart';
 import 'package:dota_v2_pepe/app/core/api/dota_hero_api.dart';
-import 'package:dota_v2_pepe/app/core/routers/dio_client.dart';
+import 'package:dota_v2_pepe/app/core/dio_client.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
