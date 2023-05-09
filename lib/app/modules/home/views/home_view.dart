@@ -1,5 +1,5 @@
 import 'package:dota_v2_pepe/app/const/app_color.dart';
-import 'package:dota_v2_pepe/app/const/primaryattr_extension.dart';
+import 'package:dota_v2_pepe/app/const/primaryattr.dart';
 import 'package:dota_v2_pepe/app/data/models/dota_heroes_model.dart';
 import 'package:dota_v2_pepe/app/utils/loading_indicator.dart';
 import 'package:dota_v2_pepe/app/widget/dota_hero_card.dart';
@@ -29,93 +29,6 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  _body() {
-    return Obx(
-      () {
-        final dotaHeroes = controller.dotaHeroes;
-        final sort = controller.isSortClicked.value;
-        final searchHeroText = controller.searchHeroName.value;
-
-        List<DotaHeroes> dotaHeroList = dotaHeroes;
-
-        if (sort == false) {
-          dotaHeroList
-              .sort((a, b) => a.localizedName!.compareTo(b.localizedName!));
-        } else {
-          dotaHeroList
-              .sort((a, b) => b.localizedName!.compareTo(a.localizedName!));
-        }
-
-        if (searchHeroText.isNotEmpty) {
-          dotaHeroList = dotaHeroList
-              .where((e) =>
-                  e.localizedName
-                      ?.toLowerCase()
-                      .contains(searchHeroText.toLowerCase()) ??
-                  false)
-              .toList();
-        }
-
-        if (controller.isFavorite.value) {
-          dotaHeroList = dotaHeroList
-              .where((e) => controller.favorites.contains(e.id))
-              .toList();
-        }
-
-        if (controller.filterPrimaryAttr[0]) {
-          dotaHeroList = dotaHeroList
-              .where((e) => e.primaryAttr == PrimaryAttr.str)
-              .toList();
-        } else if (controller.filterPrimaryAttr[1]) {
-          dotaHeroList = dotaHeroList
-              .where((e) => e.primaryAttr == PrimaryAttr.agi)
-              .toList();
-        } else if (controller.filterPrimaryAttr[2]) {
-          dotaHeroList = dotaHeroList
-              .where((e) => e.primaryAttr == PrimaryAttr.int)
-              .toList();
-        } else if (controller.filterPrimaryAttr[3]) {
-          dotaHeroList = dotaHeroList
-              .where((e) => e.primaryAttr == PrimaryAttr.all)
-              .toList();
-        }
-
-        return Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                ImageName.background,
-              ),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
-                childAspectRatio: 16 / 9,
-              ),
-              itemCount: dotaHeroList.length,
-              itemBuilder: (context, index) {
-                return DotaHeroCard(
-                  information: dotaHeroList[index],
-                  isFavorite:
-                      controller.favorites.contains(dotaHeroList[index].id),
-                  onTap: () => controller.goToHeroDetail(
-                    dotaHeroList[index],
-                  ),
-                );
-              },
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   _appbar() {
     return AppBar(
       elevation: 0.0,
@@ -137,40 +50,23 @@ class HomeView extends GetView<HomeController> {
               child: Row(
                 children: [
                   Obx(
-                    () => _iconFilter(
-                      imageName: ImageName.heroStrength,
-                      onTap: () {
-                        controller.setFilterPrimaryAttr(0);
-                      },
-                      opacity: controller.filterPrimaryAttr[0] ? 1 : 0.25,
-                    ),
-                  ),
-                  Obx(
-                    () => _iconFilter(
-                      imageName: ImageName.heroAgility,
-                      onTap: () {
-                        controller.setFilterPrimaryAttr(1);
-                      },
-                      opacity: controller.filterPrimaryAttr[1] ? 1 : 0.25,
-                    ),
-                  ),
-                  Obx(
-                    () => _iconFilter(
-                      imageName: ImageName.heroIntelligence,
-                      onTap: () {
-                        controller.setFilterPrimaryAttr(2);
-                      },
-                      opacity: controller.filterPrimaryAttr[2] ? 1 : 0.25,
-                    ),
-                  ),
-                  Obx(
-                    () => _iconFilter(
-                      imageName: ImageName.heroUniversal,
-                      onTap: () {
-                        controller.setFilterPrimaryAttr(3);
-                      },
-                      opacity: controller.filterPrimaryAttr[3] ? 1 : 0.25,
-                    ),
+                    () {
+                      return Row(
+                        children: PrimaryAttr.values
+                            .map<Widget>(
+                              (e) => _iconFilter(
+                                imageName: e.imageName,
+                                opacity: controller.filterPrimaryAttr.value == e
+                                    ? 1
+                                    : 0.25,
+                                onTap: () {
+                                  controller.setFilterPrimaryAttr(e);
+                                },
+                              ),
+                            )
+                            .toList(),
+                      );
+                    },
                   ),
                   const SizedBox(
                     width: 16,
@@ -235,6 +131,7 @@ class HomeView extends GetView<HomeController> {
                 bottom: 8,
               ),
               child: TextField(
+                cursorColor: AppColors.primaryColor,
                 controller: controller.searchHeroTextController,
                 style: const TextStyle(
                   color: AppColors.primaryColor,
@@ -264,6 +161,85 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
+  _body() {
+    return RefreshIndicator(
+      onRefresh: _refresh,
+      child: Obx(
+        () {
+          final dotaHeroes = controller.dotaHeroes;
+          final sort = controller.isSortClicked.value;
+          final searchHeroText = controller.searchHeroName.value;
+
+          List<DotaHeroes> dotaHeroList = dotaHeroes;
+
+          if (sort == false) {
+            dotaHeroList
+                .sort((a, b) => a.localizedName!.compareTo(b.localizedName!));
+          } else {
+            dotaHeroList
+                .sort((a, b) => b.localizedName!.compareTo(a.localizedName!));
+          }
+
+          if (searchHeroText.isNotEmpty) {
+            dotaHeroList = dotaHeroList
+                .where((e) =>
+                    e.localizedName
+                        ?.toLowerCase()
+                        .contains(searchHeroText.toLowerCase()) ??
+                    false)
+                .toList();
+          }
+
+          if (controller.isFavorite.value) {
+            dotaHeroList = dotaHeroList
+                .where((e) => controller.favorites.contains(e.id))
+                .toList();
+          }
+
+          if (controller.filterPrimaryAttr.value != null) {
+            dotaHeroList = dotaHeroList
+                .where(
+                    (e) => e.primaryAttr == controller.filterPrimaryAttr.value)
+                .toList();
+          }
+
+          return Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  ImageName.background,
+                ),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 8,
+                  childAspectRatio: 16 / 9,
+                ),
+                itemCount: dotaHeroList.length,
+                itemBuilder: (context, index) {
+                  return DotaHeroCard(
+                    information: dotaHeroList[index],
+                    isFavorite:
+                        controller.favorites.contains(dotaHeroList[index].id),
+                    onTap: () => controller.goToHeroDetail(
+                      dotaHeroList[index],
+                    ),
+                  );
+                },
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   _iconFilter({
     required String imageName,
     required double opacity,
@@ -288,6 +264,14 @@ class HomeView extends GetView<HomeController> {
             width: 8,
           ),
         ],
+      ),
+    );
+  }
+
+  Future<void> _refresh() {
+    return Future.delayed(
+      const Duration(
+        seconds: 1,
       ),
     );
   }

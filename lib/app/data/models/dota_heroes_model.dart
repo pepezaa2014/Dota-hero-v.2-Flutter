@@ -1,5 +1,5 @@
-import 'package:dota_v2_pepe/app/const/atk_type_extension.dart';
-import 'package:dota_v2_pepe/app/const/primaryattr_extension.dart';
+import 'package:dota_v2_pepe/app/const/atk_type.dart';
+import 'package:dota_v2_pepe/app/const/primaryattr.dart';
 import 'package:get/get.dart';
 
 class DotaHeroes {

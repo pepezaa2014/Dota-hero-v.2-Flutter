@@ -51,6 +51,7 @@ class DotaHeroDetailView extends GetView<DotaHeroDetailController> {
 
   _body() {
     return SingleChildScrollView(
+      physics: const ClampingScrollPhysics(),
       child: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -73,7 +74,10 @@ class DotaHeroDetailView extends GetView<DotaHeroDetailController> {
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
-                  colors: [Color(0xFF252728), Color(0xFF101415)],
+                  colors: [
+                    AppColors.containerGradientLeft,
+                    AppColors.containerGradientRight,
+                  ],
                 ),
               ),
               child: const Divider(
@@ -89,7 +93,10 @@ class DotaHeroDetailView extends GetView<DotaHeroDetailController> {
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
-                  colors: [Color(0xFF252728), Color(0xFF101415)],
+                  colors: [
+                    AppColors.containerGradientLeft,
+                    AppColors.containerGradientRight,
+                  ],
                 ),
               ),
               child: const Divider(

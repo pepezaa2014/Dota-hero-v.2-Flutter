@@ -1,3 +1,4 @@
+import 'package:dota_v2_pepe/app/const/primaryattr.dart';
 import 'package:dota_v2_pepe/app/core/api/dota_hero_api.dart';
 import 'package:dota_v2_pepe/app/data/models/dota_heroes_model.dart';
 import 'package:dota_v2_pepe/app/extensions/bool_extension.dart';
@@ -12,7 +13,7 @@ class HomeController extends GetxController {
   final SessionManager _sessionManager = Get.find();
 
   late final RxList<int> favorites;
-  final RxList<bool> filterPrimaryAttr = [false, false, false, false].obs;
+  final Rxn<PrimaryAttr> filterPrimaryAttr = Rxn();
 
   final RxBool isFavorite = false.obs;
   final RxBool isSortClicked = false.obs;
@@ -73,17 +74,11 @@ class HomeController extends GetxController {
     }
   }
 
-  void setFilterPrimaryAttr(int index) {
-    if (filterPrimaryAttr.contains(true)) {
-      if (filterPrimaryAttr[index] == true) {
-        filterPrimaryAttr[index] = !filterPrimaryAttr[index];
-      } else {
-        filterPrimaryAttr.value =
-            List<bool>.filled(filterPrimaryAttr.length, false);
-        filterPrimaryAttr[index] = !filterPrimaryAttr[index];
-      }
+  void setFilterPrimaryAttr(PrimaryAttr filter) {
+    if (filterPrimaryAttr.value == filter) {
+      filterPrimaryAttr.value = null;
     } else {
-      filterPrimaryAttr[index] = !filterPrimaryAttr[index];
+      filterPrimaryAttr.value = filter;
     }
   }
 }
