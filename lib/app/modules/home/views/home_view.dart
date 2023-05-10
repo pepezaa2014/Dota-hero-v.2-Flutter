@@ -23,7 +23,9 @@ class HomeView extends GetView<HomeController> {
             appBar: _appbar(),
             body: _body(),
           ),
-          // Obx(() => loadingIndicator(controller.isLoading.value),),
+          Obx(
+            () => loadingIndicator(controller.isLoading.value),
+          ),
         ],
       ),
     );
