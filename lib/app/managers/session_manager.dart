@@ -1,3 +1,4 @@
+import 'package:dota_v2_pepe/app/const/app_constant.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -9,9 +10,9 @@ class SessionManager {
   final RxList<int> favorites = RxList();
 
   void loadSession() {
-    final result = _getStorage.read('favoriteId');
-    if (result != null) {
-      favorites(result);
+    final result = _getStorage.read(AppConstant.favoriteId);
+    if (result is List) {
+      favorites.value = result.whereType<int>().toList();
     }
   }
 
@@ -21,6 +22,6 @@ class SessionManager {
     } else {
       favorites.add(id);
     }
-    _getStorage.write('favoriteId', favorites.value);
+    _getStorage.write(AppConstant.favoriteId, favorites.value);
   }
 }

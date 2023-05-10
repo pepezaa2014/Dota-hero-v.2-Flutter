@@ -28,12 +28,11 @@ void main() async {
 }
 
 Future<void> _setupInstance() async {
+  await GetStorage.init();
   Get.put(GetStorage());
 
   final GetStorage getStorage = Get.find();
   Get.put(SessionManager(getStorage));
-  final SessionManager sessionManager = Get.find();
-  sessionManager.loadSession();
 
   Get.put(Dio());
 

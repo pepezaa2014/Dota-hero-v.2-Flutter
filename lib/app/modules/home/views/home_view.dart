@@ -23,7 +23,7 @@ class HomeView extends GetView<HomeController> {
             appBar: _appbar(),
             body: _body(),
           ),
-          Obx(() => loadingIndicator(controller.isLoading.value))
+          // Obx(() => loadingIndicator(controller.isLoading.value),),
         ],
       ),
     );
@@ -31,6 +31,7 @@ class HomeView extends GetView<HomeController> {
 
   _appbar() {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0.0,
       title: Image.asset(
         ImageName.dota2Logo,
