@@ -55,7 +55,7 @@ class HomeController extends GetxController {
 
   @override
   Future<void> refresh() async {
-    await getHeroes;
+    getHeroes();
   }
 
   void goToHeroDetail(DotaHeroes characterDetail) {
