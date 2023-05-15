@@ -32,6 +32,7 @@ Future<void> _setupInstance() async {
   Get.put(GetStorage());
 
   final GetStorage getStorage = Get.find();
+  
   Get.put(SessionManager(getStorage));
 
   Get.put(Dio());

@@ -1,6 +1,7 @@
 import 'package:dota_v2_pepe/app/const/app_color.dart';
 import 'package:dota_v2_pepe/app/const/app_constant.dart';
 import 'package:dota_v2_pepe/app/const/hero_portrait.dart';
+import 'package:dota_v2_pepe/app/const/role.dart';
 import 'package:dota_v2_pepe/app/data/models/dota_heroes_model.dart';
 import 'package:dota_v2_pepe/resources/resources.dart';
 import 'package:flutter/material.dart';
@@ -103,7 +104,7 @@ class HeadWidget extends StatelessWidget {
                             width: 8,
                           ),
                           Text(
-                            information.attackType?.name
+                            information.attackType?.atkName
                                     .toString()
                                     .toUpperCase() ??
                                 '',
@@ -424,20 +425,12 @@ class RolesWidget extends StatelessWidget {
               ),
               child: Center(
                 child: Row(
-                  children: [
-                    _roleText(
-                      role: 'Carry',
-                      checkedColor: information.roles?.contains('Carry'),
-                    ),
-                    _roleText(
-                      role: 'Support',
-                      checkedColor: information.roles?.contains('Support'),
-                    ),
-                    _roleText(
-                      role: 'Nuker',
-                      checkedColor: information.roles?.contains('Nuker'),
-                    ),
-                  ],
+                  children: Role.values.take(3).map((e) {
+                    return _roleText(
+                      roleName: e.roleName,
+                      checkColor: information.roles.contains(e),
+                    );
+                  }).toList(),
                 ),
               ),
             ),
@@ -449,20 +442,12 @@ class RolesWidget extends StatelessWidget {
               ),
               child: Center(
                 child: Row(
-                  children: [
-                    _roleText(
-                      role: 'Disabler',
-                      checkedColor: information.roles?.contains('Disabler'),
-                    ),
-                    _roleText(
-                      role: 'Jungler',
-                      checkedColor: information.roles?.contains('Jungler'),
-                    ),
-                    _roleText(
-                      role: 'Durable',
-                      checkedColor: information.roles?.contains('Durable'),
-                    ),
-                  ],
+                  children: Role.values.skip(3).take(3).map((e) {
+                    return _roleText(
+                      roleName: e.roleName,
+                      checkColor: information.roles.contains(e),
+                    );
+                  }).toList(),
                 ),
               ),
             ),
@@ -474,20 +459,12 @@ class RolesWidget extends StatelessWidget {
               ),
               child: Center(
                 child: Row(
-                  children: [
-                    _roleText(
-                      role: 'Escape',
-                      checkedColor: information.roles?.contains('Escape'),
-                    ),
-                    _roleText(
-                      role: 'Pusher',
-                      checkedColor: information.roles?.contains('Pusher'),
-                    ),
-                    _roleText(
-                      role: 'Initiator',
-                      checkedColor: information.roles?.contains('Initiator'),
-                    ),
-                  ],
+                  children: Role.values.skip(6).take(3).map((e) {
+                    return _roleText(
+                      roleName: e.roleName,
+                      checkColor: information.roles.contains(e),
+                    );
+                  }).toList(),
                 ),
               ),
             ),
@@ -497,12 +474,15 @@ class RolesWidget extends StatelessWidget {
     );
   }
 
-  _roleText({required String role, required bool? checkedColor}) {
+  Widget _roleText({
+    required String? roleName,
+    required bool? checkColor,
+  }) {
     return Expanded(
       child: Text(
-        role,
+        roleName ?? '',
         style: TextStyle(
-          color: checkedColor == true
+          color: checkColor ?? false
               ? AppColors.primaryColor
               : AppColors.tertiaryColor,
           fontWeight: FontWeight.bold,

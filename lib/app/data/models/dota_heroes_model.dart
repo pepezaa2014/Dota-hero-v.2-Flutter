@@ -1,5 +1,6 @@
 import 'package:dota_v2_pepe/app/const/atk_type.dart';
 import 'package:dota_v2_pepe/app/const/primaryattr.dart';
+import 'package:dota_v2_pepe/app/const/role.dart';
 import 'package:get/get.dart';
 
 class DotaHeroes {
@@ -8,7 +9,7 @@ class DotaHeroes {
   String? localizedName;
   String? _primaryAttr;
   String? _attackType;
-  List<String>? roles;
+  List<String>? _roles;
   String? img;
   String? icon;
   double? baseHealth;
@@ -67,7 +68,7 @@ class DotaHeroes {
     localizedName = json['localized_name'];
     _primaryAttr = json['primary_attr'];
     _attackType = json['attack_type'];
-    roles = json['roles'].cast<String>();
+    _roles = json['roles'].cast<String>();
     img = json['img'];
     icon = json['icon'];
     baseHealth = (json['base_health'] as num?)?.toDouble();
@@ -183,7 +184,13 @@ extension DotaHeroExtension on DotaHeroes {
     return PrimaryAttr.values.firstWhereOrNull((e) => e.name == _primaryAttr);
   }
 
-  AtackType? get attackType {
-    return AtackType.values.firstWhereOrNull((e) => e.name == _attackType);
+  ATKType? get attackType {
+    return ATKType.values.firstWhereOrNull((e) => e.atkName == _attackType);
+  }
+
+  List<Role> get roles {
+    return Role.values
+        .where((e) => _roles?.contains(e.roleName) ?? false)
+        .toList();
   }
 }

@@ -16,22 +16,21 @@ dependencies:
   get_storage: ^2.1.1
   # flutter_native_splash: ^2.2.19
 
-  
 dev_dependencies: 
   flutter_lints: 2.0.1
   flutter_test: 
     sdk: flutter
 
-flutter_native_splash:
-  andriod: true
-  ios: true
-  web: false
+# flutter_native_splash:
+#   andriod: true
+#   ios: true
+#   web: false
 
-  color: '#1E2328'
+#   color: '#1E2328'
   
-  android_12:
-    color: '#1E2328'
-    image: assets/images/logo.png
+#   android_12:
+#     color: '#1E2328'
+#     image: assets/images/logo.png
     
 flutter: 
   uses-material-design: true

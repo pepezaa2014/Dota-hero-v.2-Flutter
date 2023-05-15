@@ -1,5 +1,5 @@
 import 'package:dota_v2_pepe/app/const/app_color.dart';
-import 'package:dota_v2_pepe/app/modules/widget/detail_widget.dart';
+import 'package:dota_v2_pepe/app/modules/dota_hero_detail/detail_widget.dart';
 import 'package:dota_v2_pepe/resources/resources.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

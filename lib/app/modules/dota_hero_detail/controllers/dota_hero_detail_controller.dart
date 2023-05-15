@@ -13,6 +13,7 @@ class DotaHeroDetailController extends GetxController {
     super.onInit();
     informationHero = Get.arguments;
     favorites = _sessionManager.favorites;
+    print(informationHero.roles);
   }
 
   @override

@@ -45,12 +45,17 @@ class HomeController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    _getHeroes();
+    getHeroes();
   }
 
   @override
   void onClose() {
     super.onClose();
+  }
+
+  @override
+  Future<void> refresh() async {
+    await getHeroes;
   }
 
   void goToHeroDetail(DotaHeroes characterDetail) {
@@ -60,17 +65,20 @@ class HomeController extends GetxController {
     );
   }
 
-  void _getHeroes() async {
+  void getHeroes() async {
     try {
       isLoadingGetHeroes(true);
+      print(isLoadingGetHeroes.value);
+
       final result = await _dotaHeroAPI.getHeroes();
-      isLoadingGetHeroes(false);
       dotaHeroes.value = result;
     } catch (error) {
-      isLoadingGetHeroes(false);
       showAlertError(
         error: error,
       );
+    } finally {
+      isLoadingGetHeroes(false);
+      print(isLoadingGetHeroes.value);
     }
   }
 

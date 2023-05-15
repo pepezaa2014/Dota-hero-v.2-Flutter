@@ -1,8 +1,8 @@
 import 'package:dota_v2_pepe/app/const/app_color.dart';
 import 'package:dota_v2_pepe/app/const/primaryattr.dart';
 import 'package:dota_v2_pepe/app/data/models/dota_heroes_model.dart';
+import 'package:dota_v2_pepe/app/modules/home/dota_hero_card.dart';
 import 'package:dota_v2_pepe/app/utils/loading_indicator.dart';
-import 'package:dota_v2_pepe/app/widget/dota_hero_card.dart';
 import 'package:dota_v2_pepe/resources/resources.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,9 @@ class HomeView extends GetView<HomeController> {
             body: _body(),
           ),
           Obx(
-            () => loadingIndicator(controller.isLoading.value),
+            () => LoadingIndicator(
+              isLoading: controller.isLoading.value,
+            ),
           ),
         ],
       ),
@@ -166,7 +168,7 @@ class HomeView extends GetView<HomeController> {
 
   _body() {
     return RefreshIndicator(
-      onRefresh: _refresh,
+      onRefresh: controller.refresh,
       child: Obx(
         () {
           final dotaHeroes = controller.dotaHeroes;
@@ -267,14 +269,6 @@ class HomeView extends GetView<HomeController> {
             width: 8,
           ),
         ],
-      ),
-    );
-  }
-
-  Future<void> _refresh() {
-    return Future.delayed(
-      const Duration(
-        seconds: 1,
       ),
     );
   }
